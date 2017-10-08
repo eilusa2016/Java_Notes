@@ -1,0 +1,20 @@
+/usr/local/redis/redis-cluster/redis06/redis-server /usr/local/redis/redis-cluster/redis06/redis.conf
+/usr/local/redis/redis-cluster/redis05/redis-server /usr/local/redis/redis-cluster/redis05/redis.conf
+/usr/local/redis/redis-cluster/redis04/redis-server /usr/local/redis/redis-cluster/redis04/redis.conf
+/usr/local/redis/redis-cluster/redis03/redis-server /usr/local/redis/redis-cluster/redis03/redis.conf
+/usr/local/redis/redis-cluster/redis02/redis-server /usr/local/redis/redis-cluster/redis02/redis.conf
+/usr/local/redis/redis-cluster/redis01/redis-server /usr/local/redis/redis-cluster/redis01/redis.conf
+
+查看进程：
+
+ps aux|grep redis
+
+连接各个节点进行集群
+./redis-trib.rb create --replicas 1 127.0.0.1:7001 127.0.0.1:7002 127.0.0.1:7003 127.0.0.1:7004 127.0.0.1:7005  127.0.0.1:7006
+
+测试集群
+redis01/redis-cli -h 127.0.0.1 -p 7002 -c
+
+关闭集群状态下的redis
+（1）./redis-cli -p 7001 shutdown 一句句的来关
+ (2)写批处理语句

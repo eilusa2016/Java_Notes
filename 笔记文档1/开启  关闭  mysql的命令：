@@ -1,0 +1,7 @@
+开启  关闭  mysql的命令：
+sudo /usr/local/mysql/support-files/mysql.server start
+sudo /usr/local/mysql/support-files/mysql.server stop
+sudo /usr/local/mysql/support-files/mysql.server restart
+
+root
+root
