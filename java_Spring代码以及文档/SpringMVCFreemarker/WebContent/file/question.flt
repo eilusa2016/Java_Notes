@@ -1,0 +1,8 @@
+<head>
+<title>生成html静态页面</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"; charset=UTF-8" />
+</head>
+<body>
+     <span>生成题干ID${question.id}</span>
+     <span>生成题干内容${question.quesContent}</span>   
+</body>

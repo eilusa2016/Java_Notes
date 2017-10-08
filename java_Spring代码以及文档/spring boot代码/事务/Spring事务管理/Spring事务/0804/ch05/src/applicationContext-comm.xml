@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+			
+			
+	<!--spring自带数据源-->
+	<bean id="springdatasoure"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"></property>
+		<property name="url"
+			value="jdbc:sqlserver://localhost:1030;databasename=svse"></property>
+		<property name="username" value="sa"></property>
+		<property name="password" value="sa"></property>
+	</bean>
+	<!--Apache的数据源-->
+	<bean id="apachedatasoure" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"></property>
+		<property name="url"
+			value="jdbc:sqlserver://localhost:1433;databasename=svse"></property>
+		<property name="username" value="sa"></property>
+		<property name="password" value="sa"></property>
+	</bean>
+	
+	<!--事务管理器-->
+	<bean id="txManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+			<property name="dataSource" ref="apachedatasoure"></property>
+		</bean>
+		
+		
+		 <tx:annotation-driven transaction-manager="txManager"  proxy-target-class="true" />
+		
+		
+		<!--事务管理通知-->
+<!--		<tx:advice id="txAdvice"  transaction-manager="txManager">-->
+<!--			<tx:attributes>-->
+<!--				<tx:method name="get*"  propagation="NOT_SUPPORTED" />-->
+<!--				<tx:method name="*" propagation="REQUIRED"/>-->
+<!--			</tx:attributes>-->
+<!--		</tx:advice>-->
+<!--		-->
+<!--		<aop:config>-->
+<!--			<aop:pointcut expression="execution(* org.svse.service.impl.*.*(..))"  id="txPointcut"/>-->
+<!--			<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>-->
+<!--		</aop:config>-->
+
+	
+		
+</beans>
+
+
+
+
+

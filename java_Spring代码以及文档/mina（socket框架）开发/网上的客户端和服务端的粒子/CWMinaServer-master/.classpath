@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="lib" path="E:/2015安卓临时源码/github源码/mina-core-2.0.13.jar"/>
+	<classpathentry kind="lib" path="E:/2015安卓临时源码/github源码/slf4j-api-1.7.14.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

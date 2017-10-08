@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="        
+           http://www.springframework.org/schema/beans        
+           http://www.springframework.org/schema/beans/spring-beans-4.0.xsd        
+           http://www.springframework.org/schema/context        
+           http://www.springframework.org/schema/context/spring-context-4.0.xsd       
+           http://www.springframework.org/schema/mvc        
+           http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+	<!-- 开启注解扫描功能 -->
+	<context:component-scan base-package="gd.hz.controller"></context:component-scan>
+	<!-- 将上面两个注解和并 -->
+	<mvc:annotation-driven />
+
+
+	<!--freemarker页面解析器 -->
+	<bean id="viewResolverFtl"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<property name="suffix" value=".ftl"></property>
+		<property name="contentType" value="text/html;charset=UTF-8" />
+		<!-- <property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView" 
+			/> -->
+		<!-- 将Spring的FreeMarkerView改成我们扩展的View -->
+		<property name="viewClass" value="gd.hz.ExFreeMarkerView" />
+		<property name="exposeRequestAttributes" value="true" />
+		<property name="exposeSessionAttributes" value="true" />
+		<property name="exposeSpringMacroHelpers" value="true" />
+		<property name="cache" value="true" />
+        <property name="order" value="0"/>
+	</bean>
+
+	<bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape" />
+
+	<!--配置Freemarker -->
+	<bean id="freemarkerConfigurer"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<!-- 模版页面存放的位置 -->
+		<property name="templateLoaderPath" value="/ftl/"></property>
+		<property name="freemarkerVariables">
+			<map>
+				<entry key="xml_escape" value-ref="fmXmlEscape" />
+			</map>
+		</property>
+		<property name="freemarkerSettings">
+			<props>
+				<prop key="template_update_delay">10</prop>
+				<prop key="defaultEncoding">UTF-8</prop>
+                <prop key="locale">zh_CN</prop>
+                <prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+                <prop key="date_format">yyyy-MM-dd</prop>
+                <prop key="number_format">#.##</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- 下面要声明在模版后面 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!-- JSP页面存放的位置 -->
+		<property name="prefix" value="/jsp/" />
+		<property name="suffix" value=".jsp" /><!--可为空,方便实现自已的依据扩展名来选择视图解释类的逻辑  -->
+		 <property name="order" value="1"/>
+	</bean>
+</beans>  

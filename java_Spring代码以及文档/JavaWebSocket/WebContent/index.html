@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Websoket</title>
+<style type="text/css">
+#connect-container {
+	float: left;
+	width: 400px
+}
+
+#connect-container div {
+	padding: 5px;
+}
+
+#console-container {
+	float: left;
+	margin-left: 15px;
+	width: 400px;
+}
+
+#logDiv {
+	border: 1px solid #CCCCCC;
+	border-right-color: #999999;
+	border-bottom-color: #999999;
+	height: 170px;
+	overflow-y: scroll;
+	padding: 5px;
+	width: 100%;
+}
+
+#logDiv p {
+	padding: 0;
+	margin: 0;
+}
+</style>
+</head>
+<body>
+	<div>
+		<div id="connect-container">
+			<div>
+				<input id="target" type="text" value="ws://localhost:8080/JavaWebSocket/websocket/echoAnnotation" size="40" style="width: 350px" />
+			</div>
+			<div>
+				<button id="connect" onclick="connect();">链接</button>
+				<button id="disconnect" disabled="disabled" onclick="disconnect();">Disconnect</button>
+			</div>
+			<div>
+				<textarea id="message" style="width: 350px">Here is a message!</textarea>
+			</div>
+			<div>
+				<button id="echo" onclick="send();" disabled="disabled">发送</button>
+			</div>
+		</div>
+		<div id="console-container">
+			<div id="logDiv" />
+		</div>
+	</div>
+	<!-- 
+	以下是链接的代码
+	 -->
+	<script type="text/javascript">
+		var ws = null;
+		var target = 'ws://localhost:8080/JavaWebSocket/websocket/echoAnnotation';
+		/**
+		 *链接
+		 */
+		function connect() {
+			if ('WebSocket' in window) {
+				ws = new WebSocket(target);
+			} else if ('MozWebSocket' in window) {
+				ws = new MozWebSocket(target);
+			} else {
+				alert("浏览器不支持websocket，请升级浏览器...");
+				return;
+			}
+			document.getElementById("connect").disabled = true;
+			document.getElementById("disconnect").disabled = false;
+			document.getElementById("echo").disabled = false;
+			
+			ws.onopen = function () {
+               
+            };
+            ws.onmessage = function (event) {
+            	//var objs=event.data;
+            	var cc = document.getElementById('logDiv');
+                var p = document.createElement('p');
+                p.style.wordWrap = 'break-word';
+                p.appendChild(document.createTextNode(event.data));
+                cc.appendChild(p);
+                console.log(event);
+                
+            };
+            ws.onclose = function (event) {
+            	console.log(event.code, event.reason);
+            };
+			
+			
+		}
+		//发送消息
+		function  send(){
+			var message=document.getElementById("message").value;
+			ws.send(message);
+			document.getElementById("message").value="";
+		}
+		
+		
+		//断开连接
+		 function disconnect() {
+	            if (ws != null) {
+	                ws.close();
+	                ws = null;
+	            }
+	            document.getElementById("connect").disabled = false;
+				document.getElementById("disconnect").disabled = true;
+				document.getElementById("echo").disabled = true;
+	        }
+	</script>
+</body>
+</html>

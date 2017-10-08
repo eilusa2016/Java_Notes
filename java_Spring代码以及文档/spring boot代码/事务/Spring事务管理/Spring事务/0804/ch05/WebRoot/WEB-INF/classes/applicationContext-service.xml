@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+			
+			
+	
+	<!--dao-->
+	<bean id="stuDao" class="org.svse.dao.impl.JDBCStuDAOImpl">
+		<property name="dataSource">
+			<ref  bean="apachedatasoure" />
+		</property>
+	</bean>
+	
+	<bean id="studao3" class="org.svse.dao.impl.StuDAOImpl">
+		<property name="dataSource"  ref="apachedatasoure"></property>
+	</bean>
+	
+	
+	<bean id="stuDao2" class="org.svse.dao.impl.SimpleJDBCStuDAOImpl">
+		<property name="dataSource" ref="apachedatasoure"></property>
+	</bean>
+	
+	<bean id="stuService" class="org.svse.service.impl.StuInfoServiceImpl">
+		<property name="studao" ref="stuDao2"></property>
+	</bean>
+	
+	
+	
+</beans>

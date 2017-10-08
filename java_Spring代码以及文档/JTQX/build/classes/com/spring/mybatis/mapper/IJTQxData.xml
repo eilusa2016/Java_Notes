@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.mybatis.mapper.IJTQxData">
+	<resultMap id="BaseResultMap" type="com.spring.mybatis.pojo.JTBean">
+		<result column="ID" property="id" jdbcType="INTEGER" />
+		<result column="区站号" property="区站号" jdbcType="NVARCHAR" />
+		<result column="入库时间" property="入库时间" jdbcType="TIMESTAMP" />
+		<result column="通信方式" property="通信方式" jdbcType="NVARCHAR" />
+		<result column="日期时间" property="日期时间" jdbcType="TIMESTAMP" />
+		<result column="电源状态" property="电源状态" jdbcType="NVARCHAR" />
+		<result column="瞬时风速" property="瞬时风速" jdbcType="INTEGER" />
+		<result column="瞬时风向" property="瞬时风向" jdbcType="INTEGER" />
+		<result column="二分风速" property="二分风速" jdbcType="INTEGER" />
+		<result column="二分风向" property="二分风向" jdbcType="INTEGER" />
+		<result column="十分风速" property="十分风速" jdbcType="INTEGER" />
+		<result column="十分风向" property="十分风向" jdbcType="INTEGER" />
+		<result column="极大风速" property="极大风速" jdbcType="INTEGER" />
+		<result column="极大风向" property="极大风向" jdbcType="INTEGER" />
+		<result column="极大风速对应时间" property="极大风速对应时间" jdbcType="NVARCHAR" />
+		<result column="最大风速" property="最大风速" jdbcType="INTEGER" />
+		<result column="最大风向" property="最大风向" jdbcType="INTEGER" />
+		<result column="最大风速对应时间" property="最大风速对应时间" jdbcType="NVARCHAR" />
+		<result column="分钟雨量" property="分钟雨量" jdbcType="NVARCHAR" />
+		<result column="一小时雨量" property="一小时雨量" jdbcType="INTEGER" />
+		<result column="十分钟最大雨强" property="十分钟最大雨强" jdbcType="INTEGER" />
+		<result column="最大雨强出现时间" property="最大雨强出现时间" jdbcType="NVARCHAR" />
+		<result column="空气温度" property="空气温度" jdbcType="INTEGER" />
+		<result column="最高气温" property="最高气温" jdbcType="INTEGER" />
+		<result column="最高气温出现时间" property="最高气温出现时间" jdbcType="NVARCHAR" />
+		<result column="最低气温" property="最低气温" jdbcType="INTEGER" />
+		<result column="最低气温出现时间" property="最低气温出现时间" jdbcType="NVARCHAR" />
+		<result column="相对湿度" property="相对湿度" jdbcType="INTEGER" />
+		<result column="最小湿度" property="最小湿度" jdbcType="INTEGER" />
+		<result column="最小湿度出现时间" property="最小湿度出现时间" jdbcType="NVARCHAR" />
+		<result column="本站气压" property="本站气压" jdbcType="INTEGER" />
+		<result column="最高气压" property="最高气压" jdbcType="INTEGER" />
+		<result column="最高气压出现时间" property="最高气压出现时间" jdbcType="NVARCHAR" />
+		<result column="最低气压" property="最低气压" jdbcType="INTEGER" />
+		<result column="最低气压出现时间" property="最低气压出现时间" jdbcType="NVARCHAR" />
+		<result column="能见度" property="能见度" jdbcType="INTEGER" />
+		<result column="最大能见度" property="最大能见度" jdbcType="INTEGER" />
+		<result column="最大能见度时间" property="最大能见度时间" jdbcType="NVARCHAR" />
+		<result column="最小能见度" property="最小能见度" jdbcType="INTEGER" />
+		<result column="最小能见度时间" property="最小能见度时间" jdbcType="NVARCHAR" />
+		<result column="土壤湿度5cm" property="土壤湿度5cm" jdbcType="NVARCHAR" />
+		<result column="土壤湿度10cm" property="土壤湿度10cm" jdbcType="NVARCHAR" />
+		<result column="土壤湿度15cm" property="土壤湿度15cm" jdbcType="NVARCHAR" />
+		<result column="土壤湿度20cm" property="土壤湿度20cm" jdbcType="NVARCHAR" />
+		<result column="area" property="area" jdbcType="NVARCHAR" />
+	</resultMap>
+
+
+	<resultMap id="BaseResultMap2" type="com.spring.mybatis.pojo.ViewJtcawsdata">
+		<result column="ID" property="id" jdbcType="INTEGER" />
+		<result column="区站号" property="区站号" jdbcType="VARCHAR" />
+		<result column="日期时间" property="日期时间" jdbcType="TIMESTAMP" />
+		<result column="天气模式" property="天气模式" jdbcType="CHAR" />
+		<result column="实时天气代码" property="实时天气代码" jdbcType="CHAR" />
+		<result column="十五分钟天气代码" property="十五分钟天气代码" jdbcType="CHAR" />
+		<result column="一小时天气代码" property="一小时天气代码" jdbcType="CHAR" />
+		<result column="一分钟降水" property="一分钟降水" jdbcType="INTEGER" />
+		<result column="累计雨量" property="累计雨量" jdbcType="INTEGER" />
+		<result column="路面状况" property="路面状况" jdbcType="CHAR" />
+		<result column="路面温度" property="路面温度" jdbcType="INTEGER" />
+		<result column="路面积水深度" property="路面积水深度" jdbcType="INTEGER" />
+		<result column="路面结冰厚度" property="路面结冰厚度" jdbcType="INTEGER" />
+		<result column="路面积雪深度" property="路面积雪深度" jdbcType="INTEGER" />
+		<result column="一分钟能见度" property="一分钟能见度" jdbcType="INTEGER" />
+		<result column="十分钟能见度" property="十分钟能见度" jdbcType="INTEGER" />
+		<result column="最小能见度" property="最小能见度" jdbcType="INTEGER" />
+		<result column="最小能见度时间" property="最小能见度时间" jdbcType="VARCHAR" />
+		<result column="DSC气温" property="dsc气温" jdbcType="INTEGER" />
+		<result column="DSC相对湿度" property="dsc相对湿度" jdbcType="INTEGER" />
+		<result column="DSC露点" property="dsc露点" jdbcType="INTEGER" />
+		<result column="表面温度" property="表面温度" jdbcType="INTEGER" />
+		<result column="表面状态" property="表面状态" jdbcType="INTEGER" />
+		<result column="湿滑程度" property="湿滑程度" jdbcType="INTEGER" />
+		<result column="覆盖厚度" property="覆盖厚度" jdbcType="INTEGER" />
+		<result column="水累积量" property="水累积量" jdbcType="INTEGER" />
+		<result column="冰累积量" property="冰累积量" jdbcType="INTEGER" />
+		<result column="雪累积量" property="雪累积量" jdbcType="INTEGER" />
+		<result column="输入电压" property="输入电压" jdbcType="INTEGER" />
+	</resultMap>
+
+
+
+	<select id="FindChangezhanDatas" resultMap="BaseResultMap">
+		<![CDATA[ 
+			select  *  from  view_cawsDataNew where   区站号 in ('K1025','K1037','K1110','K1087','K1079','K1145','K1501','K1276')
+		]]>
+	</select>
+
+	<select id="FindChangezhanDatas1501" resultMap="BaseResultMap2">
+		<![CDATA[ 
+			select  *  from  view_JtCawsData where   区站号   in ('K1501')
+		]]>
+	</select>
+
+</mapper>

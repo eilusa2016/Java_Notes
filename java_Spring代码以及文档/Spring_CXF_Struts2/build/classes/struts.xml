@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+
+    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
+    <constant name="struts.devMode" value="true" /> 
+    <constant name="struts.custom.i18n.resources" value="app"></constant>
+    <constant name="struts.multipart.maxSize" value="9000000"/>
+    <!-- 设置缓存文件夹 -->
+    <constant name="struts.multipart.saveDir" value="/tmp"></constant>
+    <constant name="struts.action.extension" value="action" />
+    
+    <package name="struts" namespace="/sp"  extends="struts-default">
+   		<!-- class="indexAction" 指向 IOC容器中 bean 的id -->
+       <action name="sp_*" class="indexAction" method="{1}">
+       		<result name="success" >/success.jsp</result>
+       		<result name="input">/jsp/error.jsp</result>
+       		<!-- 配置拦截器限制上传文件类型及大小 -->
+			<interceptor-ref name="fileUpload">
+				<param name="allowedTypes">*</param>
+				<param name="maximumSize">200M</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+       </action>
+    </package>
+</struts>

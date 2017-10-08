@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<content>
+	<title>1. 映射单向多对一的关联关系</title>
+	<desc>
+		双向一对多关系中，必须存在一个关系维护端，在 JPA 规范中，要求 many 的一方作为关系的维护端(owner side),
+		one 的一方作为被维护端(inverse side)。
+		可以在 one 方指定 @OneToMany 注释并设置 mappedBy
+		属性，以指定它是这一关联中的被维护端，many 为维护端。
+		在 many 方指定 @ManyToOne 注释，并使用 @JoinColumn
+		指定外键名称
+
+	</desc>
+
+
+
+
+	<title>3. 映射双向多对一的关联关系</title>
+	<desc></desc>
+
+
+
+	<title>4. 映射双向一对一的关联关系</title>
+	<desc>
+		基于外键的 1-1 关联关系：在双向的一对一关联中，需要在关系被维护端(inverse side)中的 @OneToOne
+		注释中指定 mappedBy，以指定是这一关联中的被维护端。同时需要在关系维护端(owner side)建立外键列指向关系被维护端的主键列。
+
+		如果延迟其实可以不关联一个 Department
+		如果有 Department 关联就设置为代理对象而延迟加载, 如果不存在关联的
+		Department 就设置 null, 因为外键字段是定义在
+		Department 表中的,Hibernate 在不读取
+		Department 表的情况是无法判断是否有关联有 Deparmtment,
+		因此无法判断设置 null 还是代理对象,
+		而统一设置为代理对象,也无法满足不关联的情况, 所以无法使用延迟加载,只 有显式读取
+		Department.
+		加载要起作用,
+		就必须设置一个代理对象
+	</desc>
+
+
+	<title>5. 映射双向多对多的关联关系</title>
+	<desc>
+		在双向多对多关系中，我们必须指定一个关系维护端(owner side),可以通过 @ManyToMany 注释中指定
+		mappedBy 属性来标识其为关系维护端
+	</desc>
+</content>

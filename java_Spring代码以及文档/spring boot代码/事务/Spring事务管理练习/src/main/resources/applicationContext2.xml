@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+
+    <!--配置c3p0连接池-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${jdbc.Driver}"/>
+        <property name="jdbcUrl" value="${jdbc.URL}"/>
+        <property name="user" value="${jdbc.USERNAME}"/>
+        <property name="password" value="${jdbc.PASSWD}"/>
+    </bean>
+
+    <!--配置业务层类-->
+    <bean id="accountService" class="com.spring.demo2.AccountServiceImp">
+        <property name="accountDao" ref="accountDao"/>
+    </bean>
+
+    <!--配置Dao的类-->
+    <bean id="accountDao" class="com.spring.demo2.AccountDaoImp">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--配置事物管理器-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--配置业务层代理-->
+    <bean id="accountServiceProxy" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <!--配置目标对象-->
+        <property name="target" ref="accountService"/>
+        <!--注入事物管理器-->
+        <property name="transactionManager" ref="transactionManager"/>
+        <!--注入事物的属性-->
+        <property name="transactionAttributes">
+            <props>
+                <!--
+                prop格式
+                    * PROPAGATION   :事物的传播行为
+                    * ISOLATION     :事物的隔离级别
+                    * readOnly      :只读(不可以进行修改，插入，删除的操作)
+                    * -Exception    :发生哪些异常回滚事物
+                    * +Exception    :发生哪些异常不回滚事物
+                -->
+                <!--<prop key="transfer">PROPAGATION_REQUIRED</prop>-->
+                <!--<prop key="transfer">PROPAGATION_REQUIRED,readOnly</prop>-->
+                <prop key="transfer">PROPAGATION_REQUIRED, +java.lang.ArithmeticException</prop>
+            </props>
+        </property>
+    </bean>
+
+</beans>

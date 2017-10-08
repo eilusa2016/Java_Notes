@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	
+	<!-- 别名定义 -->
+	<typeAliases>
+		<package name="com.spring.mybatis.pojo" />
+	</typeAliases>
+	<!-- 加载 映射文件 -->
+	<mappers>
+	
+		 <!-- 
+		 Spring中配置了  就不雅重复的配置
+		 <package name="com.spring.mybatis.mapper"/>
+		  -->
+		 
+		
+	</mappers>
+</configuration>

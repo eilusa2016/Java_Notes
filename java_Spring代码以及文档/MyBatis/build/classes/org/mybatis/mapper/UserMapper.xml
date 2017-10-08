@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+注意这里的namespace一定要和对应的UserMapper接口的类路径一样
+ -->
+<mapper namespace="org.mybatis.mapper.UserMapper">
+
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache" > 
+        <property name="timeToIdleSeconds" value="3600"/>
+        <property name="timeToLiveSeconds" value="3600"/>
+        <!-- 同ehcache参数maxElementsInMemory -->
+		<property name="maxEntriesLocalHeap" value="1000"/>
+		<!-- 同ehcache参数maxElementsOnDisk -->
+        <property name="maxEntriesLocalDisk" value="10000000"/>
+        <property name="memoryStoreEvictionPolicy" value="LRU"/>
+    </cache>
+
+	<!-- 定义sql片段
+	id：sql片段的唯 一标识
+	
+	经验：是基于单表来定义sql片段，这样话这个sql片段可重用性才高
+	在sql片段中不要包括 where
+	 -->
+	<sql id="query_user_where">
+		<if test="userCustom!=null">
+			<if test="userCustom.sex!=null and userCustom.sex!=''">
+				and user.sex = #{userCustom.sex}
+			</if>
+			<if test="userCustom.username!=null and userCustom.username!=''">
+				and user.username LIKE '%${userCustom.username}%'
+			</if>
+			<if test="ids!=null">
+			<!-- 使用 foreach遍历传入ids
+			collection：指定输入 对象中集合属性
+			item：每个遍历生成对象中
+			open：开始遍历时拼接的串
+			close：结束遍历时拼接的串
+			separator：遍历的两个对象中需要拼接的串
+			 -->
+			 <!-- 使用实现下边的sql拼接：
+			  AND (id=1 OR id=10 OR id=16) 
+			  -->
+			<foreach collection="ids" item="user_id" open="AND (" close=")" separator="or">
+				<!-- 每个遍历需要拼接的串 -->
+				id=#{user_id}
+			</foreach>
+			
+			<!-- 实现  “ and id IN(1,10,16)”拼接 -->
+			<!-- <foreach collection="ids" item="user_id" open="and id IN(" close=")" separator=",">
+				每个遍历需要拼接的串
+				#{user_id}
+			</foreach> -->
+			</if>
+		</if>
+	</sql>
+
+
+	<!-- 定义resultMap
+		将SELECT id id_,username username_ FROM USER 和User类中的属性作一个映射关系
+		type：resultMap最终映射的java对象类型,可以使用别名
+		id：对resultMap的唯一标识
+	 -->
+	 <resultMap type="user" id="userResultMap">
+	 	<!-- 
+	 		id表示查询结果集中唯一标识 
+	 		column：查询出来的列名
+	 		property：type指定的pojo类型中的属性名
+	 		最终resultMap对column和property作一个映射关系 （对应关系）
+	 	-->
+	 	<id column="id_" property="id"/>
+	 	<!-- 
+	 		result：对普通名映射定义
+	 		column：查询出来的列名
+	 		property：type指定的pojo类型中的属性名
+	 		最终resultMap对column和property作一个映射关系 （对应关系）
+	 	 -->
+	 	<result column="username_" property="username"/>
+	 
+	 </resultMap>
+
+	<!-- 用户信息综合查询
+	#{userCustom.sex}:取出pojo包装对象中性别值
+	${userCustom.username}：取出pojo包装对象中用户名称
+	 -->
+	<select id="findUserList" parameterType="org.mybatis.pojo.UserQueryVo" 
+			resultType="org.mybatis.pojo.UserCustom">
+		SELECT * FROM USER
+	<!-- 
+	where可以自动去掉条件中的第一个and
+	 -->
+	<where>
+		<!-- 引用sql片段 的id，如果refid指定的id不在本mapper文件中，需要前边加namespace -->
+		<include refid="query_user_where"></include>
+		<!-- 在这里还要引用其它的sql片段  -->
+	</where>
+		
+		
+	</select>
+	
+	<!-- 用户信息综合查询总数
+	parameterType：指定输入类型和findUserList一样
+	resultType：输出结果类型
+	 -->
+	<select id="findUserCount" parameterType="org.mybatis.pojo.UserQueryVo" resultType="int">
+	   SELECT count(*) FROM USER 
+		  <!-- 
+		where可以自动去掉条件中的第一个and
+		 -->
+		<where>
+			<!-- 引用sql片段 的id，如果refid指定的id不在本mapper文件中，需要前边加namespace -->
+			<include refid="query_user_where"></include>
+			<!-- 在这里还要引用其它的sql片段  -->
+		</where>
+	</select>
+
+
+	<!-- 
+		Mybatis使用ognl表达式解析对象字段的值，如下例子：
+	 -->
+	<select id="findUserByUser" parameterType="user" resultType="user">
+		select * from user where id=#{id} and username like '%${username}%'
+	</select>
+
+
+
+
+	 <select   id="findUserById" parameterType="int" resultType="org.mybatis.pojo.User">
+	 	SELECT * FROM USER WHERE id=#{value}
+	 </select>
+	 
+	<select id="findUserByName" parameterType="java.lang.String" resultType="org.mybatis.pojo.User">
+		SELECT * FROM USER WHERE username LIKE '%${value}%'
+	</select>
+	
+	<insert id="insertUser" parameterType="org.mybatis.pojo.User">
+		<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into user(username,birthday,sex,address) value(#{username},#{birthday},#{sex},#{address})
+	</insert>
+	
+	<delete id="deleteUser" parameterType="java.lang.Integer">
+		delete from user where id=#{id}
+	</delete>
+	
+	<update id="updateUser" parameterType="org.mybatis.pojo.User">
+		update user set username=#{username},birthday=#{birthday},sex=#{sex},address=#{address} 
+		where id=#{id}
+	</update>
+	
+</mapper>
