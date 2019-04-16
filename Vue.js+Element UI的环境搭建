@@ -1,0 +1,36 @@
+一、搭建环境
+
+由于新的node已经集成了npm，所以直接安装node，前往node官网下载最新版本的node，根据自己的操作系统选择相应的包，按照步骤一步步走就可以，这里不做过多介绍。
+
+安装好后可以打开命令行用  npm-v   node-v 查看是否安装成功以及版本号
+
+如果以前已经安装过node  和 npm 最好升级到最新版本，命令行 npm install npm@x.xx.x
+
+首先全局安装vue-cli,打开CMD命令行，npm install -g vue-cli
+
+接下来新建项目，运行 vue init webpack demo   这里的demo是你项目的名字，接下来会有一些初始化的设置，其中vue-router是路由，反正我都会选择安装，
+其他的可以回车跳过或者选择no
+
+ 
+
+---按照提示，cd到新建的项目下，运行npm install
+
+---运行npm run de
+
+到这里，不出意外的话可以在浏览器里面看到Vue的初始化模板了，如果没有可能是端口号被占用，这里就将配置文件config/index.js里面的端口号改掉就可以了
+
+另外还要补充一下，最后的打包如果在本地起服务器运行打包后的文件是无法运行的，会报错404，所以这里将assetsPublicPath里面的 "/"改成"./"
+
+二、安装Element
+
+到这里我们就可以愉快的玩耍Vue了，但是我们之前说的是 Vue + Element 所以接下来我们药继续安装ElementUI
+
+cd到当前项目 运行 npm i element-ui -S
+
+
+
+到这里我们已经安装好了element，接下来就是在项目里面引用了，打开src目录下的main.js
+
+
+
+下面我们就可以愉快的使用element里面优雅的组件了，这个是element的网址http://element.eleme.io/#/zh-CN/component/form，也可以自行百度
