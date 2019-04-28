@@ -1,2 +1,30 @@
 参考地址
 https://www.oschina.net/p/redisson-spring-boot-starter
+其他的分布式锁
+public boolean tryLock(String lockKey, long timeout) {
+    long start = System.currentTimeMillis();
+    boolean lockResult = false;
+    while(true){
+        if(System.currentTimeMillis() - start > timeout){
+            break;
+        }
+        String result = jedis.set(lockKey, uuid,
+                  DisLock.SET_IF_NOT_EXIST, DisLock.SET_WITH_EXPIRE_TIME_MILLISECOND, lockTime); //lockKey, uuid, NX, PX, lockTime
+        if(!StringUtils.isBlank(result) && result.equals(DisLock.LOCK_SUCCESS)){
+            lockResult = true;
+            break;
+        }
+        LockSupport.parkNanos(TimeUnit.NANOSECONDS.convert(15, TimeUnit.MILLISECONDS));
+    }
+    return lockResult;
+}
+ 
+
+public boolean releaseLock(String lockKey) {
+    String script = "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end";
+    Object result = jedis.eval(script, Collections.singletonList(lockKey), Collections.singletonList(uuid));
+    if (DisLock.RELEASE_SUCCESS.equals(result)) {
+        return true;
+    }
+    return false;
+}
