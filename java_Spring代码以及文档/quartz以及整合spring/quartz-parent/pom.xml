@@ -8,7 +8,7 @@
 
 	<!-- 版本信息 -->
 	<properties>
-		<quartz-scheduler.version>2.2.2</quartz-scheduler.version>
+		<quartz-scheduler.version>2.3.2</quartz-scheduler.version>
 		<slf4j.version>1.7.7</slf4j.version>
 		<log4j.version>1.2.12</log4j.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
